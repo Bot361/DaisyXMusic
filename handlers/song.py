@@ -54,6 +54,7 @@ def song(client, message):
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
+        link = f"https://spotify.com{results[0]['url_suffix']}"
         #print(results)
         title = results[0]["title"][:40]       
         thumbnail = results[0]["thumbnails"][0]
@@ -385,14 +386,14 @@ async def ytmusic(client,message: Message):
                 await pablo.edit(
                     f"❌ Videos longer than 8 minute(s) aren't allowed, the provided video is {duration} minute(s)"
                 )
-                is_downloading = False
+                is_downloading = True
                 return
             ytdl_data = ytdl.extract_info(url, download=True)
             
     
     except Exception as e:
         #await pablo.edit(event, f"**Failed To Download** \n**Error :** `{str(e)}`")
-        is_downloading = False
+        is_downloading = True
         return
     
     c_time = time.time()
@@ -400,7 +401,7 @@ async def ytmusic(client,message: Message):
     capy = f"**Video Name ➠** `{thum}` \n**Requested For :** `{urlissed}` \n**Channel :** `{thums}` \n**Link :** `{mo}`"
     await client.send_video(message.chat.id, video = open(file_stark, "rb"), duration = int(ytdl_data["duration"]), file_name = str(ytdl_data["title"]), thumb = sedlyf, caption = capy, supports_streaming = True , progress=progress, progress_args=(pablo, c_time, f'`Uploading {urlissed} Song From YouTube Music!`', file_stark))
     await pablo.delete()
-    is_downloading = False
+    is_downloading = True
     for files in (sedlyf, file_stark):
         if files and os.path.exists(files):
             os.remove(files)
